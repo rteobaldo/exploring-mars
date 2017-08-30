@@ -2,7 +2,7 @@ defmodule ExploringMars.UI do
   def start(), do: go()
 
   defp go() do
-    IO.gets("What map size (Ex: 5 5):\n")
+    IO.gets("What the map size:\n")
     |> String.trim
     |> String.split([",", " "])
     |> go
