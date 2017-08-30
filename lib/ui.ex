@@ -8,16 +8,22 @@ defmodule ExploringMars.UI do
     |> go
   end
 
-  defp go(matrix_size) do
+  defp go({:ok, _, matrix_size}) do
     initial_probe_state = IO.gets("Where is the next probe:\n")
     |> String.trim
     |> String.split([",", " "])
 
-    IO.gets("Waiting instructions for probe:\n")
+    result = IO.gets("Waiting instructions for probe:\n")
     |> String.trim
-    |> String.split([",", " "])
+    |> String.split("", trim: true)
     |> ExploringMars.main(initial_probe_state, matrix_size)
-    |> go
+
+    {_, %ExploringMars.Probe{x_position: x, y_position: y, cardinal: c }, _} = result
+    IO.puts("#{x} #{y} #{c}")
+
+    go(result)
   end
+
+  defp go(matrix_size), do: go({:ok, %{}, matrix_size})
 
 end
